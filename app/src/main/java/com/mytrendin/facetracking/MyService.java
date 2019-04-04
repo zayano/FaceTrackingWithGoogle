@@ -78,23 +78,23 @@ public class MyService extends Service {
         mNotificationManager.notify(NOTIFY_ID,mBuilder.build());
     }
 
-    private void lookupServer(){
-        AsyncHttpClient client = new AsyncHttpClient(true,80,443);
-        String BaseServer = EndPoint.server;
-        try {
-            client.post(BaseServer, new AsyncHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-                }
-            });
-        } catch (Exception ex){
-
-        }
-    }
+//    private void lookupServer(){
+//        AsyncHttpClient client = new AsyncHttpClient(true,80,443);
+//        String BaseServer = EndPoint.server;
+//        try {
+//            client.post(BaseServer, new AsyncHttpResponseHandler() {
+//                @Override
+//                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+//
+//                }
+//
+//                @Override
+//                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+//
+//                }
+//            });
+//        } catch (Exception ex){
+//
+//        }
+//    }
 }

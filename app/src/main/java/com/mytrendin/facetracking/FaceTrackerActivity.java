@@ -85,8 +85,8 @@ public final class FaceTrackerActivity extends AppCompatActivity {
             requestCameraPermission();
         }
 
-        Intent service = new Intent(getApplicationContext(), MyService.class);
-        startService(service);
+//        Intent service = new Intent(getApplicationContext(), MyService.class);
+//        startService(service);
     }
 
     /**
@@ -120,8 +120,8 @@ public final class FaceTrackerActivity extends AppCompatActivity {
                 .setAction(R.string.ok, listener)
                 .show();
 
-        Intent service = new Intent(getApplicationContext(), MyService.class);
-        startService(service);
+//        Intent service = new Intent(getApplicationContext(), MyService.class);
+//        startService(service);
     }
 
     /**
@@ -156,8 +156,8 @@ public final class FaceTrackerActivity extends AppCompatActivity {
                 .setAutoFocusEnabled(true)
                 .build();
 
-        Intent service = new Intent(getApplicationContext(), MyService.class);
-        startService(service);
+//        Intent service = new Intent(getApplicationContext(), MyService.class);
+//        startService(service);
     }
 
     /**
@@ -168,8 +168,8 @@ public final class FaceTrackerActivity extends AppCompatActivity {
         super.onResume();
 
         startCameraSource();
-        Intent service = new Intent(getApplicationContext(), MyService.class);
-        startService(service);
+//        Intent service = new Intent(getApplicationContext(), MyService.class);
+//        startService(service);
     }
 
     /**
@@ -263,8 +263,8 @@ public final class FaceTrackerActivity extends AppCompatActivity {
         if (mCameraSource != null) {
             try {
                 mPreview.start(mCameraSource, mGraphicOverlay);
-                Intent service = new Intent(getApplicationContext(), MyService.class);
-                startService(service);
+//                Intent service = new Intent(getApplicationContext(), MyService.class);
+//                startService(service);
             } catch (IOException e) {
                 Log.e(TAG, "Unable to start camera source.", e);
                 mCameraSource.release();
@@ -292,7 +292,7 @@ public final class FaceTrackerActivity extends AppCompatActivity {
      * Face tracker for each detected individual. This maintains a face graphic within the app's
      * associated face overlay.
      */
-    private class GraphicFaceTracker extends Tracker<Face> {
+    private class GraphicFaceTracker extends Tracker<Face> implements com.mytrendin.facetracking.GraphicFaceTracker {
         private GraphicOverlay mOverlay;
         private FaceGraphic mFaceGraphic;
 
@@ -300,16 +300,19 @@ public final class FaceTrackerActivity extends AppCompatActivity {
             mOverlay = overlay;
             mFaceGraphic = new FaceGraphic(overlay,context);
 
-            Intent service = new Intent(getApplicationContext(), MyService.class);
-            startService(service);
+//            Intent service = new Intent(getApplicationContext(), MyService.class);
+//            startService(service);
         }
 
         /**
          * Start tracking the detected face instance within the face overlay.
          */
         @Override
-        public void onNewItem(int faceId, Face item) {
+        public void onNewItem(int faceId, int faceHappiness, String facePrediction, String faceEmotion, Face item) {
             mFaceGraphic.setId(faceId);
+            mFaceGraphic.setPrediction(facePrediction);
+            mFaceGraphic.setEmotion(faceEmotion);
+            mFaceGraphic.setHappiness(faceHappiness);
         }
 
         /**
@@ -320,8 +323,8 @@ public final class FaceTrackerActivity extends AppCompatActivity {
             mOverlay.add(mFaceGraphic);
             mFaceGraphic.updateFace(face);
 
-            Intent service = new Intent(getApplicationContext(), MyService.class);
-            startService(service);
+//            Intent service = new Intent(getApplicationContext(), MyService.class);
+//            startService(service);
 
         }
 

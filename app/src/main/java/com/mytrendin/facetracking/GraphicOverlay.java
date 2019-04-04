@@ -129,8 +129,8 @@ public class GraphicOverlay extends View {
      */
     public void clear() {
         synchronized (mLock) {
-            Intent service = new Intent(getContext(), MyService.class);
-            getContext().startService(service);
+//            Intent service = new Intent(getContext(), MyService.class);
+//            getContext().startService(service);
             mGraphics.clear();
         }
         postInvalidate();
@@ -141,8 +141,8 @@ public class GraphicOverlay extends View {
      */
     public void add(Graphic graphic) {
         synchronized (mLock) {
-            Intent service = new Intent(getContext(), MyService.class);
-            getContext().startService(service);
+//            Intent service = new Intent(getContext(), MyService.class);
+//            getContext().startService(service);
             mGraphics.add(graphic);
         }
         postInvalidate();
@@ -153,8 +153,8 @@ public class GraphicOverlay extends View {
      */
     public void remove(Graphic graphic) {
         synchronized (mLock) {
-            Intent service = new Intent(getContext(), MyService.class);
-            getContext().startService(service);
+//            Intent service = new Intent(getContext(), MyService.class);
+//            getContext().startService(service);
             mGraphics.remove(graphic);
         }
         postInvalidate();
@@ -182,8 +182,8 @@ public class GraphicOverlay extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Intent service = new Intent(getContext(), MyService.class);
-        getContext().startService(service);
+//        Intent service = new Intent(getContext(), MyService.class);
+//        getContext().startService(service);
 
         synchronized (mLock) {
             if ((mPreviewWidth != 0) && (mPreviewHeight != 0)) {

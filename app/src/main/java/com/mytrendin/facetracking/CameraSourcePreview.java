@@ -50,8 +50,8 @@ public class CameraSourcePreview extends ViewGroup {
         mSurfaceView.getHolder().addCallback(new SurfaceCallback());
         addView(mSurfaceView);
 
-        Intent service = new Intent(mContext, MyService.class);
-        mContext.startService(service);
+//        Intent service = new Intent(mContext, MyService.class);
+//        mContext.startService(service);
     }
 
     public void start(CameraSource cameraSource) throws IOException {
@@ -71,16 +71,16 @@ public class CameraSourcePreview extends ViewGroup {
         mOverlay = overlay;
         start(cameraSource);
 
-        Intent service = new Intent(mContext, MyService.class);
-        mContext.startService(service);
+//        Intent service = new Intent(mContext, MyService.class);
+//        mContext.startService(service);
     }
 
     public void stop() {
         if (mCameraSource != null) {
             mCameraSource.stop();
 
-            Intent service = new Intent(getContext(), MyService.class);
-            getContext().startService(service);
+//            Intent service = new Intent(getContext(), MyService.class);
+//            getContext().startService(service);
         }
     }
 
@@ -111,8 +111,8 @@ public class CameraSourcePreview extends ViewGroup {
             mStartRequested = false;
         }
 
-        Intent service = new Intent(mContext, MyService.class);
-        mContext.startService(service);
+//        Intent service = new Intent(mContext, MyService.class);
+//        mContext.startService(service);
     }
 
     private class SurfaceCallback implements SurfaceHolder.Callback {
@@ -121,8 +121,8 @@ public class CameraSourcePreview extends ViewGroup {
             mSurfaceAvailable = true;
             try {
                 startIfReady();
-                Intent service = new Intent(mContext, MyService.class);
-                mContext.startService(service);
+//                Intent service = new Intent(mContext, MyService.class);
+//                mContext.startService(service);
             } catch (IOException e) {
                 Log.e(TAG, "Could not start camera source.", e);
             }
@@ -176,16 +176,16 @@ public class CameraSourcePreview extends ViewGroup {
 
         try {
             startIfReady();
-            @SuppressLint("DrawAllocation")
-            Intent service = new Intent(mContext, MyService.class);
-            mContext.startService(service);
+//            @SuppressLint("DrawAllocation")
+//            Intent service = new Intent(mContext, MyService.class);
+//            mContext.startService(service);
         } catch (IOException e) {
             Log.e(TAG, "Could not start camera source.", e);
         }
 
-        @SuppressLint("DrawAllocation")
-        Intent service = new Intent(mContext, MyService.class);
-        mContext.startService(service);
+//        @SuppressLint("DrawAllocation")
+//        Intent service = new Intent(mContext, MyService.class);
+//        mContext.startService(service);
     }
 
     private boolean isPortraitMode() {
@@ -197,8 +197,8 @@ public class CameraSourcePreview extends ViewGroup {
             return true;
         }
 
-        Intent service = new Intent(mContext, MyService.class);
-        mContext.startService(service);
+//        Intent service = new Intent(mContext, MyService.class);
+//        mContext.startService(service);
 
         Log.d(TAG, "isPortraitMode returning false by default");
         return false;

@@ -57,6 +57,9 @@ class FaceGraphic extends GraphicOverlay.Graphic {
 
     private volatile Face mFace;
     private int mFaceId;
+    private int mFaceHappiness;
+    private String mFacePrediction;
+    private String mFaceEmotion;
     private Context mContext;
 
     FaceGraphic(GraphicOverlay overlay, Context context) {
@@ -78,14 +81,24 @@ class FaceGraphic extends GraphicOverlay.Graphic {
         mBoxPaint.setStyle(Paint.Style.STROKE);
         mBoxPaint.setStrokeWidth(BOX_STROKE_WIDTH);
 
-        Intent service = new Intent(mContext, MyService.class);
-        mContext.startService(service);
+//        Intent service = new Intent(mContext, MyService.class);
+//        mContext.startService(service);
     }
 
     void setId(int id) {
         mFaceId = id;
-        Intent service = new Intent(mContext, MyService.class);
-        mContext.startService(service);
+    }
+
+    void setHappiness(int faceHappiness){
+        mFaceHappiness = faceHappiness;
+    }
+
+    void setEmotion(String faceEmotion){
+        mFaceEmotion = faceEmotion;
+    }
+
+    void setPrediction(String facePrediction){
+        mFacePrediction = facePrediction;
     }
 
 
@@ -96,8 +109,8 @@ class FaceGraphic extends GraphicOverlay.Graphic {
     void updateFace(Face face) {
         mFace = face;
         postInvalidate();
-        Intent service = new Intent(mContext, MyService.class);
-        mContext.startService(service);
+//        Intent service = new Intent(mContext, MyService.class);
+//        mContext.startService(service);
     }
 
 
@@ -115,12 +128,19 @@ class FaceGraphic extends GraphicOverlay.Graphic {
         float x = translateX(face.getPosition().x + face.getWidth() / 2);
         float y = translateY(face.getPosition().y + face.getHeight() / 2);
 
+        // Draw a rectangle at the position of area the detected face
         canvas.drawCircle(x, y, FACE_POSITION_RADIUS, mFacePositionPaint);
         canvas.drawText("id: " + mFaceId, x + ID_X_OFFSET, y + ID_Y_OFFSET, mIdPaint);
-        canvas.drawText("happiness: " + String.format("%.2f", face.getIsSmilingProbability()), x - ID_X_OFFSET, y - ID_Y_OFFSET, mIdPaint);
+
+        float happiness = face.getIsSmilingProbability();
+        canvas.drawText("happiness: " + String.format("%.2f", happiness), x - ID_X_OFFSET, y - ID_Y_OFFSET, mIdPaint);
 
         String prediction = getPrediction(face.getEulerY(),face.getEulerZ());
-        canvas.drawText("Prediction: "+prediction,x-ID_X_OFFSET,y-ID_Y_OFFSET+3*ID_TEXT_SIZE,mIdPaint);
+        canvas.drawText("Prediction: "+prediction,x-ID_X_OFFSET,y-ID_Y_OFFSET+2*ID_TEXT_SIZE,mIdPaint);
+
+        String emotion = getSmilling();
+        canvas.drawText("Emotional: " + emotion, x-ID_X_OFFSET,y-ID_Y_OFFSET+3*ID_TEXT_SIZE,mIdPaint);
+
         // Draws a bounding box around the face.
         float xOffset = scaleX(face.getWidth() / 2.0f);
         float yOffset = scaleY(face.getHeight() / 2.0f);
@@ -130,8 +150,8 @@ class FaceGraphic extends GraphicOverlay.Graphic {
         float bottom = y + yOffset;
         canvas.drawRect(left, top, right, bottom, mBoxPaint);
 
-        Intent service = new Intent(mContext, MyService.class);
-        mContext.startService(service);
+//        Intent service = new Intent(mContext, MyService.class);
+//        mContext.startService(service);
 
         TextView textView = (TextView)((Activity)mContext).findViewById(R.id.faceUpdates);
         String data=textView.getText().toString();
@@ -154,16 +174,17 @@ class FaceGraphic extends GraphicOverlay.Graphic {
             @Override
             public void run() {
                 mScrollView.fullScroll(ScrollView.FOCUS_DOWN);
-                Intent service = new Intent(mContext, MyService.class);
-                mContext.startService(service);
+//                Intent service = new Intent(mContext, MyService.class);
+//                mContext.startService(service);
             }
         }, 600);
 
     }
 
+    // Menentukan output prediksi wajah yang terdeteksi
     private String getPrediction(float eulerY, float eulerZ) {
-        Intent service = new Intent(mContext, MyService.class);
-        mContext.startService(service);
+//        Intent service = new Intent(mContext, MyService.class);
+//        mContext.startService(service);
         String feature="";
         if(eulerZ<5f && eulerZ >=0f){
             if(eulerY>0f && eulerY<60f){
@@ -206,9 +227,22 @@ class FaceGraphic extends GraphicOverlay.Graphic {
         return feature;
     }
 
+    // Menentukan output emotional wajah yang terdeteksi
+    private String getSmilling(){
+
+        String feature ="";
+        if (mFace.getIsSmilingProbability()>=0.50){
+            feature="Happy";
+        }else {
+            feature="Angry";
+        }
+        return feature;
+    }
+
+    // Mentukan output kedipan mata terhadap wajah yang terdeteksi
     private String getUpdates(){
-        Intent service = new Intent(mContext, MyService.class);
-        mContext.startService(service);
+//        Intent service = new Intent(mContext, MyService.class);
+//        mContext.startService(service);
         String update;
         boolean smiling = mFace.getIsSmilingProbability() > SMILING_PROB_THRESHOLD;
         boolean leftEyeClosed = mFace.getIsLeftEyeOpenProbability() < EYE_OPEN_PROB_THRESHOLD;
